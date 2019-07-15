@@ -1,8 +1,7 @@
-<%@page import="com.myframework.board.model.domain.Board2"%>
+<%@page import="com.mvcframework.news.model.domain.News"%>
 <%@ page contentType="text/html;charset=utf-8"%>
 <%
-	Board2 board2=(Board2)request.getAttribute("board2");
-	out.print(board2);
+	News news=(News)request.getAttribute("news");
 %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
@@ -32,11 +31,12 @@ border:#C3C3C3 1px solid
 a{text-decoration:none}
 img{border:0px}
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
 function del(){
 	//삭제 요청~~~ .do
 	if(confirm("삭제하시겠어요?")){
-		location.href="/board/delete.do?board2_id=<%=board2.getBoard2_id()%>";
+		location.href="/board/delete.do?board2_id=<%=news.getNews_id()%>";
 	}	
 }
 
@@ -52,7 +52,7 @@ function edit(){
 </head>
 <body>
 <form name="form1">
-<input type="hidden" name="board2_id" value="<%=board2.getBoard2_id()%>"/>
+
 <table id="box" align="center" width="603" border="0" cellpadding="0" cellspacing="0">
   <tr>
     <td><img src="/board/images/ceil.gif" width="603" height="25"></td>
@@ -71,15 +71,15 @@ function edit(){
           </tr>
           <tr id="writer">
             <td height="25" align="center">작성자</td>
-            <td><input type="text" name="writer" value="<%=board2.getWriter()%>"></td>
+            <td><input type="text" name="writer" value="<%=news.getWriter()%>"></td>
           </tr>
           <tr id="title">
             <td height="25" align="center">제목</td>
-            <td><input type="text" name="title" value="<%=board2.getTitle()%>"></td>
+            <td><input type="text" name="title" value="<%=news.getTitle()%>"></td>
           </tr>
           <tr id="content">
             <td align="center">내용</td>
-            <td><textarea name="content" style=""><%=board2.getContent() %></textarea></td>
+            <td><textarea name="content" style=""><%=news.getContent() %></textarea></td>
           </tr>
           <tr>
             <td>&nbsp;</td>
@@ -94,6 +94,13 @@ function edit(){
   </tr>
   <tr>
     <td height="1" bgcolor="#CCCCCC"></td>
+  </tr>
+  <tr>
+  	<td style="background:yellow">
+  		<input type="text" placeholder="메시지 입력" style="width:60%"/>
+  		<input type="text" placeholder="작성자 입력" style="width:20%"/>
+  		<button>댓글등록</button>
+  	</td>
   </tr>
   <tr>
     <td height="20" align="center" id="copyright">Copyright zino All Rights Reserved </td>
