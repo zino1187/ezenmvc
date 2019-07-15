@@ -37,7 +37,22 @@ $(function(){
 	$("button").click(function(){
 		registComments();
 	});	
+	
+	//문서 로드시 비동기 통신!!!
+	$.ajax({
+		url:"/comments/list.do",
+		type:"get",
+		data:{
+			news_id:<%=news.getNews_id()%>
+		},
+		success:function(data){
+			updateUI(data);
+		}		
+	});
+	
 });
+
+
 //댓글 등록 요청 ( 비동기 async)
 function registComments(){
 	$.ajax({
@@ -49,10 +64,38 @@ function registComments(){
 			news_id:<%=news.getNews_id()%>
 		},
 		success:function(data){
-			//새로고침 없이 서버에서 전송된 xml or json 을 파싱하여 화면 갱신...	
-			alert(data);
+			updateUI(data);
 		}
 	});
+}
+
+//데이터를이용하여 화면 갱시하는 함수 ( 등록, 목록 등 재사용하기 위해)
+function updateUI(data){
+	//새로고침 없이 서버에서 전송된 xml or json 을 파싱하여 화면 갱신...
+	var json = JSON.parse(data);
+	//alert(json.commentsList.length);//객체로 인식하는 시점..	
+	var container = document.getElementById("container");
+	//컨테이너 비우기!!
+	container.innerHTML="";
+				
+	for(var i=0;i<json.commentsList.length;i++){
+		var comments = json.commentsList[i];
+		//동적으로 태그를 추가하자!! ( DOM 을 추가하자!!)
+		var div = document.createElement("div"); //메시지용 박스
+		div.style.float="left";
+		div.style.width=60+"%";
+		div.style.background="yellow";
+		div.innerText=comments.msg; //메시지
+		container.appendChild(div); //부착!!
+		
+		//작성자 
+		var div2 = document.createElement("div"); //메시지용 박스
+		div2.style.float="left";
+		div2.style.width=25+"%";
+		div2.style.background="yellow";
+		div2.innerText=comments.writer;//작성자			
+		container.appendChild(div2); //부착!!
+	}		
 }
 
 function del(){
@@ -124,6 +167,11 @@ function edit(){
   		<button type="button">댓글등록</button>
   	</td>
   </tr>
+	<tr>
+		<td>
+			<div id="container"  style="background:pink;"></div>
+		</td>
+	</tr>	  
   <tr>
     <td height="20" align="center" id="copyright">Copyright zino All Rights Reserved </td>
   </tr>
