@@ -1,0 +1,12 @@
+{
+	"controller":{
+		"/news/write.do" : "com.mvcframework.news.controller.WriteController",			
+		"/news/list.do" : "com.mvcframework.news.controller.ListController",
+		"/news/detail.do":	"com.mvcframework.news.controller.DetailController"
+	},
+	"view":{
+		"/views/news/write" : "/news/list.do",
+		"/views/news/list" : "/news/list.jsp",
+		"/views/news/detail" : "/news/detail.jsp"
+	}
+}
