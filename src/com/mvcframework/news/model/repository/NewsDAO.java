@@ -72,6 +72,39 @@ public class NewsDAO {
 		
 	}
 	
+	//한건 가져오기
+	public News select(int news_id) {
+		News news=null;
+		Connection con=null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		
+		con=pool.getConnection();
+		String sql="select * from news where news_id=?";
+		try {
+			pstmt=con.prepareStatement(sql);
+			pstmt.setInt(1, news_id);
+			rs = pstmt.executeQuery();
+			//rs를 대신할 대체재 !!
+			if(rs.next()) {
+				news = new News();
+				
+				news.setNews_id(rs.getInt("news_id"));
+				news.setTitle(rs.getString("title"));
+				news.setWriter(rs.getString("writer"));
+				news.setContent(rs.getString("content"));
+				news.setRegdate(rs.getString("regdate"));
+				news.setHit(rs.getInt("hit"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}finally {
+			pool.freeConnection(con, pstmt, rs);
+		}
+		return news;
+		
+	}	
 }
 
 
