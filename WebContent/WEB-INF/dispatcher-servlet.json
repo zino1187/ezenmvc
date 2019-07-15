@@ -2,11 +2,20 @@
 	"controller":{
 		"/news/write.do" : "com.mvcframework.news.controller.WriteController",			
 		"/news/list.do" : "com.mvcframework.news.controller.ListController",
-		"/news/detail.do":	"com.mvcframework.news.controller.DetailController"
+		"/news/detail.do":	"com.mvcframework.news.controller.DetailController",
+		"/comments/write.do":"com.mvcframework.comments.controller.WriteController",
+		"/comments/list.do" : "com.mvcframework.comments.controller.ListController"
 	},
 	"view":{
 		"/views/news/write" : "/news/list.do",
 		"/views/news/list" : "/news/list.jsp",
-		"/views/news/detail" : "/news/detail.jsp"
+		"/views/news/detail" : "/news/detail.jsp",
+		"/views/comments/write":"/comments/list.do",
+		"/views/comments/list":"/comments/list.jsp"
+		
 	}
 }
+
+
+
+

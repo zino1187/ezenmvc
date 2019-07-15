@@ -33,6 +33,28 @@ img{border:0px}
 </style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 <script>
+$(function(){
+	$("button").click(function(){
+		registComments();
+	});	
+});
+//댓글 등록 요청 ( 비동기 async)
+function registComments(){
+	$.ajax({
+		url:"/comments/write.do",
+		type:"post",
+		data:{
+			writer:$("#writer").val() , 
+			msg:$("#msg").val(),
+			news_id:<%=news.getNews_id()%>
+		},
+		success:function(data){
+			//새로고침 없이 서버에서 전송된 xml or json 을 파싱하여 화면 갱신...	
+			alert(data);
+		}
+	});
+}
+
 function del(){
 	//삭제 요청~~~ .do
 	if(confirm("삭제하시겠어요?")){
@@ -69,15 +91,15 @@ function edit(){
             <td width="100">&nbsp;</td>
             <td>&nbsp;</td>
           </tr>
-          <tr id="writer">
+          <tr>
             <td height="25" align="center">작성자</td>
             <td><input type="text" name="writer" value="<%=news.getWriter()%>"></td>
           </tr>
-          <tr id="title">
+          <tr>
             <td height="25" align="center">제목</td>
             <td><input type="text" name="title" value="<%=news.getTitle()%>"></td>
           </tr>
-          <tr id="content">
+          <tr>
             <td align="center">내용</td>
             <td><textarea name="content" style=""><%=news.getContent() %></textarea></td>
           </tr>
@@ -97,9 +119,9 @@ function edit(){
   </tr>
   <tr>
   	<td style="background:yellow">
-  		<input type="text" placeholder="메시지 입력" style="width:60%"/>
-  		<input type="text" placeholder="작성자 입력" style="width:20%"/>
-  		<button>댓글등록</button>
+  		<input type="text" id="msg" placeholder="메시지 입력" style="width:60%"/>
+  		<input type="text" id="writer" placeholder="작성자 입력" style="width:20%"/>
+  		<button type="button">댓글등록</button>
   	</td>
   </tr>
   <tr>
